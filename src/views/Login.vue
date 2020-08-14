@@ -1,13 +1,14 @@
 <template>
     <v-app>
-        <title>Login</title>
         <v-main>
             <v-container class="fill-height" fluid>
                 <v-row align="center" justify="center">
                     <v-col cols="12" sm="8" md="4">
                         <v-card class="elevation-12">
                             <v-toolbar color="primary" dark flat>
-                                <v-toolbar-title justify="center">Login</v-toolbar-title>
+                                <v-spacer></v-spacer>
+                                <v-toolbar-title justify="center">LOGIN TO YOUR ACCOUNT</v-toolbar-title>
+                                <v-spacer></v-spacer>
                             </v-toolbar>
                             <v-card-text @keyup.enter="login">
                                 <v-form>
@@ -32,21 +33,27 @@
                                     <v-row>
                                         <v-checkbox
                                             v-model="form.Rememberme"
-                                            class="ml-9"
+                                            class="ml-7"
                                             label="Remember me"
                                         ></v-checkbox>
                                         <v-spacer></v-spacer>
                                         <v-col>
-                                            <v-btn @click="forgotPassword" text>Forgot password</v-btn>
+                                            <v-btn
+                                                @click="forgotPassword"
+                                                text
+                                            >Forgot your password?</v-btn>
                                         </v-col>
                                     </v-row>
                                 </v-form>
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn color="primary" to="/register">Register</v-btn>
-                                <v-spacer></v-spacer>
                                 <v-btn color="primary" @click="login" :loading="loading">Login</v-btn>
+                                <v-spacer></v-spacer>
+                            </v-card-actions>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>Don't have an account?
+                                <v-btn color="primary" to="/register" text>Register</v-btn>
                                 <v-spacer></v-spacer>
                             </v-card-actions>
                         </v-card>
@@ -120,8 +127,7 @@ export default {
                     let data = await login(this.form);
                     let access_token = data.access_token;
                     this.$store.commit("SET_TOKEN", access_token);
-                    setToken(access_token);
-                    refreshToken(access_token);
+                    await setToken(access_token, this.form.Rememberme);
                 }
                 const { id } = await getInfo();
                 this.$store.commit("SET_ID", id);

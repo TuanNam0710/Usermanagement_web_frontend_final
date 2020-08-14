@@ -36,8 +36,14 @@ router.beforeEach(async (to, from, next) => {
         else {
             next();
         }
-    }
-    else {
+    } else if (to.path == '/reset-password') {
+        if (store.getters.isAuth) {
+            next({ path: '/' });
+        }
+        else {
+            next();
+        }
+    } else {
         next();
     }
 })

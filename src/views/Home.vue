@@ -1,6 +1,5 @@
 <template>
     <v-app>
-        <title>Homepage</title>
         <v-app-bar app clipped-left style="color:white" color="blue lighten-1" dense>
             <v-toolbar-title class="mr-12 align-center">
                 <span class="title">USER MANAGEMENT PAGE</span>
@@ -59,7 +58,9 @@
         <v-dialog v-model="dialog" persistent max-width="600px">
             <v-card>
                 <v-card-title>
-                    <span class="headline">User</span>
+                    <v-spacer></v-spacer>
+                    <span class="headline">{{ form_title }}</span>
+                    <v-spacer></v-spacer>
                 </v-card-title>
                 <v-card-text @keyup.enter="createUser">
                     <v-text-field
@@ -154,6 +155,7 @@ export default {
     },
     data() {
         return {
+            form_title: "",
             search: "",
             dialog: false,
             editing: false,
@@ -243,6 +245,7 @@ export default {
         },
         showCreateDialog() {
             this.editing = false;
+            this.form_title = "Create new user";
             this.form = {
                 first_name: "",
                 last_name: "",
@@ -254,6 +257,7 @@ export default {
         },
         showEditDialog(item) {
             this.editing = true;
+            this.form_title = "Update user information";
             this.form = {
                 first_name: item.first_name,
                 last_name: item.last_name,
